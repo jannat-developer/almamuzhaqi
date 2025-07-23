@@ -77,12 +77,16 @@ export default function MyPlan() {
                   </button>
                 </Link>
 
-                <button
-                  className={`px-4 py-2 rounded-lg text-sm border ${plan.disabled ? 'text-gray-400 border-gray-300 cursor-not-allowed' : 'border-gray-400 cursor-pointer'}`}
-                  disabled={plan.disabled}
-                >
-                  Add Expert Review
-                </button>
+
+                <Link href="/suggested-expert">
+                  <button
+                    className={`px-4 py-2 rounded-lg text-sm border ${plan.disabled ? 'text-gray-400 border-gray-300 cursor-not-allowed' : 'border-gray-400 cursor-pointer'}`}
+                    disabled={plan.disabled}
+                  >
+                    Add Expert Review
+                  </button>
+                </Link>
+
               </div>
             </div>
           ))}

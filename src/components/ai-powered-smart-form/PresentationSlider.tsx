@@ -3,9 +3,6 @@
 import { useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import SlideCard from './SlideCard';
-import AiNavbar from './AiNavbar';
-import { useStepForm } from './StepFormContext';
-import { div } from 'framer-motion/client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { GoTriangleLeft, GoTriangleRight } from 'react-icons/go';

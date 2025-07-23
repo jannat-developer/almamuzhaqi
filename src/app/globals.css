@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+body {
+  font-family: var(--font-manrope);
+  background: white;
+}
+
+@theme {
+  --color-primary: #80E5FF;
+  --color-secondary: #008DB1;
+  --color-accent: #1F2937;
+  --color-surface: #FFEDE2;
+  --color-card: #EBFBFF;
+  --color-warning: #EB3C13;
+  --color-success: #10B981;
+  --color-info: #475466;
+}
+
+@layer utilities {
+  .animate-slide-up {
+    animation: slide-up 0.4s ease-out;
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer components {
+  .input {
+    @apply border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm;
+  }
+}

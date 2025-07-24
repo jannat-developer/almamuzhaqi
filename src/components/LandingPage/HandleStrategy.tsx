@@ -20,7 +20,7 @@ const HandleStrategy = () => {
             </h2>
 
             <div className='flex flex-col md:flex-row items-start justify-between gap-8 mb-12'>
-                <div className="flex-1 bg-white rounded-2xl shadow-md p-6 md:p-10 ">
+                <div className="flex-1 bg-white rounded-2xl  p-6 md:p-10 "  style={{ boxShadow: '0 4px 6px 1px #00CCFF26' }}>
                     <div className='px-0 md:px-6'>
                         <h3 className="text-[1.7rem] md:text-[2rem] font-medium text-accent mb-4">
                             7 Key Benefits. 1 Smart Decision.
@@ -30,7 +30,7 @@ const HandleStrategy = () => {
                             Instead of Googling for hours, get real answers tailored to
                             your business in seconds.
                         </p>
-                        <ul className="bg-card p-6 md:p-12 rounded-[20px] text-sm space-y-2 text-indigo-900 font-medium">
+                        <ul className=" rounded-[20px] text-sm space-y-2 text-indigo-900 font-medium">
                             {benefits.map((benefit, index) => (
 
                                 <li key={index} className="flex items-center gap-4 mb-4">
@@ -53,7 +53,7 @@ const HandleStrategy = () => {
 
 
                 </div>
-                <div className="flex-1 bg-white rounded-2xl shadow-md p-6 md:p-10">
+                <div className="flex-1 bg-white rounded-2xl p-6 md:p-10"  style={{ boxShadow: '0 4px 6px 1px #00CCFF26' }}>
                     <div className=''>
                         <h3 className="text-[2rem] font-medium text-accent mb-4">
                             The whole process takes only

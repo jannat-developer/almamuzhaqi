@@ -61,36 +61,77 @@ const StepEleven = () => {
 
         <div className="flex flex-col lg:flex-row gap-12 mt-12">
           {plans.map((plan, index) => (
+            // <div
+            //   key={index}
+            //   className="w-full py-10 bg-white rounded-xl px-12 space-y-4" style={{ boxShadow: '0 4px 6px 1px #00CCFF26' }}
+            // >
+            //   <p className="text-[24px] font-medium text-center">{plan.title}</p>
+
+            //   <p className="text-start text-accent text-[3rem] font-regular">
+            //     €{plan.price}/ <span className="text-[24px] font-medium text-[#475466]">{plan.unit}</span>
+            //   </p>
+
+            //   <p className="text-[#475466] text-start whitespace-pre-line">{plan.description}</p>
+
+            //   <ul className="bg-white p-6 md:p-12 rounded-xl text-sm space-y-2 text-indigo-900 font-medium">
+            //     {plan.features.map((feature, i) => (
+            //       <li key={i} className="flex items-center gap-4 mb-4">
+            //         <span className="bg-primary rounded-full p-2">
+            //           <Image
+            //             src="/images/Vector.png"
+            //             alt="Checkmark"
+            //             width={16}
+            //             height={16}
+            //             className="rounded-lg"
+            //           />
+            //         </span>
+            //         <span className="text-[1rem] md:text-[1.3rem] font-medium text-start text-accent">
+            //           {feature}
+            //         </span>
+            //       </li>
+            //     ))}
+            //   </ul>
+
+            //   <button
+            //     onClick={nextStep}
+            //     className="w-full bg-primary text-black font-semibold py-2 rounded-md transition mt-4 cursor-pointer"
+            //   >
+            //     {plan.buttonText}
+            //   </button>
+            // </div>
             <div
               key={index}
-              className="w-full py-10 bg-white shadow-md rounded-xl px-12 space-y-4"
+              className="w-full py-10 bg-white rounded-xl px-12 flex flex-col justify-between"
+              style={{ boxShadow: '0 4px 6px 1px #00CCFF26', minHeight: '720px' }} // adjust minHeight as needed
             >
-              <p className="text-[24px] font-medium text-center">{plan.title}</p>
+              <div className="space-y-4">
+                <p className="text-[24px] font-medium text-center">{plan.title}</p>
 
-              <p className="text-start text-accent text-[3rem] font-regular">
-                €{plan.price}/ <span className="text-[24px] font-medium text-[#475466]">{plan.unit}</span>
-              </p>
+                <p className="text-start text-accent text-[3rem] font-regular">
+                  €{plan.price}/ <span className="text-[24px] font-medium text-[#475466]">{plan.unit}</span>
+                </p>
 
-              <p className="text-[#475466] text-start whitespace-pre-line">{plan.description}</p>
+                <p className="text-[#475466] text-start whitespace-pre-line">{plan.description}</p>
 
-              <ul className="bg-white p-6 md:p-12 rounded-xl text-sm space-y-2 text-indigo-900 font-medium">
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-4 mb-4">
-                    <span className="bg-primary rounded-full p-2">
-                      <Image
-                        src="/images/Vector.png"
-                        alt="Checkmark"
-                        width={16}
-                        height={16}
-                        className="rounded-lg"
-                      />
-                    </span>
-                    <span className="text-[1rem] md:text-[1.3rem] font-medium text-start text-accent">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                <ul className="bg-white p-6 md:p-12 rounded-xl text-sm space-y-2 text-indigo-900 font-medium">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-4 mb-4">
+                      <span className="bg-primary rounded-full p-2">
+                        <Image
+                          src="/images/Vector.png"
+                          alt="Checkmark"
+                          width={16}
+                          height={16}
+                          className="rounded-lg"
+                        />
+                      </span>
+                      <span className="text-[1rem] md:text-[1.3rem] font-medium text-start text-accent">
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               <button
                 onClick={nextStep}
@@ -99,6 +140,7 @@ const StepEleven = () => {
                 {plan.buttonText}
               </button>
             </div>
+
           ))}
         </div>
       </main>

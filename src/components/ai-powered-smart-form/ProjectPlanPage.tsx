@@ -77,12 +77,12 @@ const ProjectPlanPage = () => {
 
           <div className="fixed bottom-12 left-0 w-full z-50 rounded-[30px] transition-all duration-300 animate-slide-up">
 
-            <div className="max-w-7xl mx-auto bg-white shadow-2xl rounded-[30px] border border-[#99A6B8]">
+            <div className="max-w-7xl mx-auto bg-white shadow-2xl rounded-[30px] border border-gray-300">
               <h2 className="text-xl font-normal bg-[#EBFBFF]  rounded-t-[30px]  p-6 ">What would you like to change about the Executive Summary above?</h2>
 
 
 
-              <div className="flex items-center justify-between px-6 py-4 bg-white rounded-b-[30px] gap-4 border-t-[#99A6B8] border-t">
+              <div className="flex items-center justify-between px-6 py-4 bg-white rounded-b-[30px] gap-4 border-t-gray-300 border-t">
                 {/* Attachment Icon */}
                 <div className="bg-[#EBFBFF] rounded-full p-2 cursor-pointer">
                   <GrAttachment />

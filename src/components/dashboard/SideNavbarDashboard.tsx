@@ -50,33 +50,33 @@ export default function SideNavbarDashboard() {
             <Link href="/my-plan">
               <button
                 className={clsx(
-                  'w-full flex items-center gap-2 text-left px-4 py-2 rounded-md text-[1rem] font-medium text-accent',
+                  'w-full flex items-center gap-3 text-left px-4 py-2 rounded-md text-[1rem] font-medium text-accent',
                   pathname === '/my-plan' ? 'bg-[#EBFBFF]' : 'bg-white hover:bg-[#EBFBFF]'
                 )}
               >
-                <BsCalendar2Check className='text-xl text-[#99A6B8]' /> My Plans
+                <BsCalendar2Check className='text-2xl text-[#99A6B8]' /> My Plans
               </button>
             </Link>
 
             <Link href="/my-profile">
               <button
                 className={clsx(
-                  'w-full flex items-center gap-2 text-left px-4 py-2 rounded-md text-[1rem] font-medium text-accent my-2',
+                  'w-full flex items-center gap-3 text-left px-4 py-2 rounded-md text-[1rem] font-medium text-accent my-2',
                   pathname === '/my-profile' ? 'bg-[#EBFBFF]' : 'bg-white hover:bg-[#EBFBFF]'
                 )}
               >
-                <CgProfile className='text-xl text-[#99A6B8]' /> My Profile
+                <CgProfile className='text-2xl text-[#99A6B8]' /> My Profile
               </button>
             </Link>
 
             <button
               onClick={() => setIsLogoutOpen(true)}
               className={clsx(
-                'w-full flex items-center gap-2 text-left px-4 py-2 rounded-md text-[1rem] font-medium text-accent',
+                'w-full flex items-center gap-3 text-left px-4 py-2 rounded-md text-[1rem] font-medium text-accent',
                 'bg-white hover:bg-[#EBFBFF]'
               )}
             >
-              <GrPower className='text-xl text-[#99A6B8]' /> Log Out
+              <GrPower className='text-2xl text-[#99A6B8]' /> Log Out
             </button>
           </div>
         </nav>

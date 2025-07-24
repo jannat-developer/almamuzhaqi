@@ -40,7 +40,7 @@ const Faq = () => {
                 {/* Left Side */}
                 <div className="md:w-1/2">
                     <h2 className="text-accent text-[1.7rem] md:text-[2rem] font-semibold mb-2">Frequently<br /><span className='text-[#015BE9]'>Asked Questions?</span></h2>
-                    <p className="text-[#475466] text-[16px] md:text-xl font-semibold ">Got questions? We've answered the most common ones.</p>
+                    <p className="text-[#475466] text-[16px] md:text-xl font-semibold ">Got questions? <br /> We've answered the most common ones.</p>
                 </div>
 
                 {/* Right Side */}
@@ -48,7 +48,7 @@ const Faq = () => {
                     {faqs.map((faq, index) => (
                         <div
                             key={index}
-                            className="border-b border-gray-200 pb-4"
+                            className={` p-4 ${openIndex === index ? 'bg-card rounded-md ' : ''}`}
                         >
 
 
@@ -58,12 +58,13 @@ const Faq = () => {
                             >
                                 <div className="flex items-center gap-2">
                                     <ChevronDown
-                                        className={`w-5 h-5 transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''
+                                        className={`w-5 h-5 transition-transform duration-300  ${openIndex === index ? 'rotate-180' : ''
                                             }`}
                                     />
                                     <span>{faq.question}</span>
                                 </div>
                             </button>
+                            
 
                             {openIndex === index && faq.answer && (
                                 <p className="mt-3 ps-7 text-gray-500 text-sm md:text-base leading-relaxed">

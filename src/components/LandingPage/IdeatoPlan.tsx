@@ -38,7 +38,7 @@ const IdeatoPlan = () => {
                         <div key={idx} className="flex flex-col items-center text-center w-1/3">
                             <p className="text-[24px] text-accent font-medium -mt-10">{item.phase}</p>
 
-                            <span className="bg-primary rounded-full p-2">
+                            <span className="bg-primary rounded-full p-3">
                                 <Image
                                     src="/images/Vector.png"
                                     alt="Descriptive alt text"
@@ -52,22 +52,34 @@ const IdeatoPlan = () => {
                     ))}
                 </div>
             </div>
-            <div className="max-w-[1440px] mx-auto bg-white  px-6 md:px-20">
+           
+            <div className="max-w-[1440px] mx-auto bg-white px-6 md:px-20">
                 {/* Timeline line */}
 
-
                 {/* Content */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-36 text-center">
                     {phases.map((item, idx) => (
-                        <div key={idx} className="flex flex-col items-center text-accent">
-                            <h3 className="text-[1.7rem] md:text-[2rem] font-medium mb-2 max-w-xs">{item.title}</h3>
-                            <p className="text-[16px] md:text-[20px] font-normal max-w-xs">{item.desc}</p>
-                            <Image src={item.img} alt={item.title} width={150} height={150} className="mb-6 mt-10" />
-                            
+                        <div key={idx} className="flex flex-col items-center text-accent h-full">
+                            <div className="flex flex-col flex-grow items-center">
+                                <h3 className="text-[1.7rem] md:text-[2rem] font-medium mb-2 max-w-xs">{item.title}</h3>
+                                <p className="text-[16px] md:text-[20px] font-normal max-w-xs">{item.desc}</p>
+                            </div>
+
+                            {/* Align all images at same level */}
+                            <div className="mt-auto pt-10">
+                                <Image
+                                    src={item.img}
+                                    alt={item.title}
+                                    width={150}
+                                    height={150}
+                                    className="mb-6"
+                                />
+                            </div>
                         </div>
                     ))}
                 </div>
             </div>
+
 
         </section>
 

@@ -35,7 +35,7 @@ const StepTen = () => {
                 {/* Right side */}
                 <form
                     onSubmit={handleSubmit}
-                    className="w-full max-w-4xl py-20 bg-white shadow-md rounded-xl p-6 space-y-4 "
+                    className="w-full max-w-4xl py-20 bg-white rounded-xl p-6 space-y-4 " style={{ boxShadow: '0 4px 6px 1px #00CCFF26' }}
                 >
                     
 

@@ -37,7 +37,7 @@ export default function MyPlan() {
           <p className="text-[1rem] font-regular text-info">Your business plans and strategic tools in one place.</p>
         </div>
         <Link href="ai-form">
-          <button className="flex items-center gap-2 px-4 py-2 bg-primary text-accent rounded-[10px] shadow cursor-pointer">
+          <button className="flex items-center gap-2 px-4 py-2 bg-[#80E5FF] text-accent rounded-[10px] shadow cursor-pointer">
             <div className='bg-white p-1 rounded-full'><GoPlus size={18} className='  text-accent' /></div>
             Generate new Plan
           </button>
@@ -61,16 +61,16 @@ export default function MyPlan() {
                 </div>
               </div>
               <div className="flex flex-wrap justify-between gap-3 mt-3">
-                <button className="px-4 py-2 bg-primary text-accent rounded-lg text-sm cursor-pointer">View Plan</button>
+                <button className="px-4 md:px-10 py-2 bg-primary text-accent rounded-lg text-sm cursor-pointer">View Plan</button>
                 <button
-                  className={`px-4 py-2 rounded-lg text-sm border ${plan.disabled ? 'text-gray-400 border-gray-300 cursor-not-allowed' : 'border-gray-400 cursor-pointer'}`}
+                  className={`px-4 md:px-10 py-2 rounded-lg text-sm border ${plan.disabled ? 'text-gray-400 border-gray-300 cursor-not-allowed' : 'border-gray-400 cursor-pointer'}`}
                   disabled={plan.disabled}
                 >
                   Download PDF
                 </button>
                 <Link href="presentation-slider">
                   <button
-                    className={`px-4 py-2 rounded-lg text-sm border ${plan.disabled ? 'text-gray-400 border-gray-300 cursor-not-allowed' : 'border-gray-400 cursor-pointer'}`}
+                    className={`px-4 md:px-10 py-2 rounded-lg text-sm border ${plan.disabled ? 'text-gray-400 border-gray-300 cursor-not-allowed' : 'border-gray-400 cursor-pointer'}`}
                     disabled={plan.disabled}
                   >
                     View Presentation
@@ -80,7 +80,7 @@ export default function MyPlan() {
 
                 <Link href="/suggested-expert">
                   <button
-                    className={`px-4 py-2 rounded-lg text-sm border ${plan.disabled ? 'text-gray-400 border-gray-300 cursor-not-allowed' : 'border-gray-400 cursor-pointer'}`}
+                    className={`px-4 md:px-10 py-2 rounded-lg text-sm border ${plan.disabled ? 'text-gray-400 border-gray-300 cursor-not-allowed' : 'border-gray-400 cursor-pointer'}`}
                     disabled={plan.disabled}
                   >
                     Add Expert Review

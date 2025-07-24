@@ -29,7 +29,7 @@ const StepTwo = () => {
     <div className="min-h-screen bg-[#F9FAFB] ">
       <AiNavbar />
 
-      <main className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-center px-6 pt-40 gap-24">
+      <main className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-center px-6 pt-40 gap-24" >
         <div className="">
           <p className="text-[1rem] font-medium text-[#475466] mb-4 text-center">Step 2 out of 09</p>
           <h1 className="text-2xl md:text-[2rem] font-medium text-accent text-center">
@@ -40,7 +40,7 @@ const StepTwo = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-lg bg-white shadow-md rounded-xl p-6 space-y-4 "
+          className="w-full max-w-lg bg-white  rounded-xl p-6 space-y-4 "  style={{ boxShadow: '0 4px 6px 1px #00CCFF26' }}
         >
           <div>
             <label className="block text-[1rem] font-medium text-accent mb-2">

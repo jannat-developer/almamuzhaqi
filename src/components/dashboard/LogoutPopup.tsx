@@ -19,8 +19,8 @@ export const LogoutPopup = ({ isOpen, onClose, onConfirm }: LogoutModalProps) =>
         )}
 
 
-        <div className="flex flex-col items-center justify-center gap-3 bg-white rounded-xl p-10 max-w-lg mx-auto z-50 relative shadow-xl">
-          <div className='bg-[#FDE1E1] p-1 rounded-full w-fit text-center'>
+        <div className="flex flex-col items-center justify-center gap-3 bg-white rounded-xl p-10 min-w-sm md:min-w-xl mx-auto z-50 relative shadow-xl">
+          <div className='bg-[#FDE1E1] p-1 rounded-full  text-center'>
             <MdOutlineErrorOutline className='text-[#FF7878] text-2xl' />
           </div>
           <div>
@@ -30,18 +30,18 @@ export const LogoutPopup = ({ isOpen, onClose, onConfirm }: LogoutModalProps) =>
           </div>
 
 
-          <div className="mt-3 flex justify-end gap-3">
+          <div className="mt-3 flex justify-end gap-6 ">
 
             <button
               onClick={onConfirm}
-              className="px-4 py-2 rounded-md bg-white text-accent border border-accent w-full"
+              className="px-10 py-2 rounded-md bg-white text-accent border border-accent w-full"
             >
               Logout
             </button>
 
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-md bg-primary text-accent w-full"
+              className="px-10 py-2 rounded-md bg-primary text-accent w-full"
             >
               Cancel
             </button>

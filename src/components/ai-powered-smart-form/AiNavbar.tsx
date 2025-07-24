@@ -8,7 +8,7 @@ type AiNavbarProps = {
 
 const AiNavbar: React.FC<AiNavbarProps> = ({ rightButtons }) => {
   return (
-    <nav className="w-full  py-4">
+    <nav className="w-full  py-4 border-b-[0.5px] border-b-[#99A6B8]">
       <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between">
         {/* Logo */}
         <Link href="/">

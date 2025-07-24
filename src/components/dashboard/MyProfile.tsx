@@ -20,10 +20,10 @@ export default function MyProfile() {
         </div>
 
         <div className="flex gap-4 w-full md:w-auto">
-          <button className="flex items-center justify-center gap-2 px-4 py-2 bg-white text-accent rounded-lg border border-accent shadow w-full md:w-auto">
+          <button className="flex items-center justify-center gap-2 px-4 py-2 bg-white text-accent rounded-lg border border-accent shadow w-full md:w-auto cursor-pointer">
             Cancel
           </button>
-          <button className="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-accent rounded-lg shadow w-full md:w-auto">
+          <button className="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-accent rounded-lg shadow w-full md:w-auto cursor-pointer">
             Save Changes
           </button>
         </div>
@@ -37,7 +37,7 @@ export default function MyProfile() {
             <p className="text-[1rem] font-regular text-info">This photo will be displayed on your profile</p>
           </div>
           <div className="flex flex-col-reverse md:flex-row gap-4 items-center">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#CCF5FF] text-accent rounded-[10px] shadow">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#CCF5FF] text-accent rounded-[10px] shadow cursor-pointer">
               <FiUpload size={18} className="text-accent" />
               Upload Photo
             </button>

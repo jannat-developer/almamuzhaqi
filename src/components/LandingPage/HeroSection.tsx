@@ -21,6 +21,9 @@ export default function HeroSection() {
             </div> */}
 
             {/* 🔷 Foreground Content Container */}
+            <div className="absolute top-20  right-0 w-[30%] h-[65%] bg-card rounded-bl-[74px]  -z-10" >
+                
+            </div>
             <div className="w-full max-w-[1440px] mx-auto">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-8 mt-20 md:mt-0">
                     <div>
@@ -54,15 +57,20 @@ export default function HeroSection() {
                         </Link>
                     </div>
 
-                    <div>
+                    <div className='relative w-fit'>
+
+                       
+                        <div />
                         <Image
                             src="/images/hero-img.jpg"
                             alt="Descriptive alt text"
                             width={600}
                             height={600}
-                            className="rounded-bl-[70px] rounded-tr-[70px] "
+                            className="rounded-bl-[70px] rounded-tr-[70px]"
                         />
                     </div>
+
+                    
                 </div>
             </div>
         </section>

@@ -6,7 +6,7 @@ import React from 'react';
 
 const Navbar = () => {
   return (
-    <nav className="w-full fixed top-0 z-50 backdrop-blur-md bg-transparent px-4 md:px-8 py-4">
+    <nav className="w-full fixed top-0 z-50 backdrop-blur-md bg-transparent px-4 md:px-8 py-4 border-b-[0.5px] border-b-[#99A6B8]">
       <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between">
         {/* Logo */}
         <div className='flex items-center justify-between gap-2'>
@@ -27,10 +27,10 @@ const Navbar = () => {
         {/* Buttons */}
         <div className="space-x-4 text-end flex gap-0.5 md:gap-1">
           <Link href="/signIn" >
-            <button className="text-black text-[1rem] font-medium px-4 py-2 rounded-lg transition bg-white border border-accent">Login</button>
+            <button className="text-black text-[1rem] font-medium px-4 py-2 rounded-lg transition bg-white border border-accent cursor-pointer">Login</button>
           </Link>
           <Link href="/signUp">
-          <button className="bg-primary text-[1rem] font-medium hover:bg-[#00d9ff] text-accent px-4 py-2 rounded-lg transition">
+          <button className="bg-primary text-[1rem] font-medium hover:bg-[#00d9ff] text-accent px-4 py-2 rounded-lg transition cursor-pointer">
             Sign Up
           </button>
           </Link>

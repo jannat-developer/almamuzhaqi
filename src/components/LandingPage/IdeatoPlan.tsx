@@ -50,7 +50,7 @@ const IdeatoPlan = () => {
 
                         </div>
                     ))}
-                </div>
+                </div> 
             </div>
            
             <div className="max-w-[1440px] mx-auto bg-white px-6 md:px-20">

@@ -66,7 +66,10 @@ export interface ResendOtpResponse {
   statusCode: number;
   message: string;
   data: {
+    userId: string;
     otpSent: boolean;
+    firstName: string;
+    lastName: string;
     message: string;
   };
 }

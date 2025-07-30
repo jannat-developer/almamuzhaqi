@@ -2,12 +2,9 @@
 "use client";
 
 import type React from "react";
-import { useState, useRef, useEffect } from "react";
 import {
-  useResendCodeMutation,
   useVerifyEmailMutation,
 } from "@/redux/api/auth/authApi";
-import { toast } from "sonner";
 import { LuCheck } from "react-icons/lu";
 import PrimaryButton from "@/components/shared/primaryButton/PrimaryButton";
 import Link from "next/link";
@@ -16,7 +13,7 @@ import Link from "next/link";
 export default function LoginSuccessful() {
 
 
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
   const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
   
 

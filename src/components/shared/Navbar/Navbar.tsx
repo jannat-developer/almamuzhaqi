@@ -182,7 +182,7 @@ const Navbar = () => {
                   <Link href="/my-plan">
                     <div className="w-full flex items-center justify-start gap-2 px-4 py-2 text-sm text-accent hover:bg-card transition-colors border-b border-gray-100 cursor-pointer">
                       <CgProfile className='text-xl text-[#99A6B8]' />
-                      <p className='text-[1rem] '>Your Profile</p>
+                      <p className='text-[1rem] '>Dashboard</p>
                     </div>
                   </Link>
                   <div onClick={handleLogout} className='w-full flex items-center justify-start gap-2 px-4 py-2 text-sm hover:bg-card transition-colors cursor-pointer'>

@@ -30,15 +30,15 @@ export default function OtpVerification() {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
   const [verifyResetPasswordOtp] = useVerifyResetPasswordOtpMutation();
-  const [resendCode] = useResendCodeMutation();
+  const [resendCode, { isLoading: isResending }] = useResendCodeMutation();
 
   // Resend OTP Timer - Initialize from localStorage or default to 300 seconds
   const [timeLeft, setTimeLeft] = useState(() => {
     if (typeof window !== "undefined") {
       const savedTime = localStorage.getItem("otpTimer");
-      return savedTime ? parseInt(savedTime) : 300;
+      return savedTime ? parseInt(savedTime) : 90;
     }
-    return 300;
+    return 90;
   });
 
   useEffect(() => {
@@ -62,16 +62,39 @@ export default function OtpVerification() {
   };
 
   // Resend OTP handler
-  const handleResendOTP = () => {
+  const handleResendOTP = async () => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
       toast.error("User ID not found. Please try registration again.");
       return;
     }
-    localStorage.setItem("otpTimer", "300"); // Reset timer in localStorage
-    setTimeLeft(300); // Reset timer in state
-    console.log("Resending OTP...");
-    resendCode({ userId });
+    
+    console.log("Attempting to resend OTP for userId:", userId);
+    
+    try {
+      const response = await resendCode({ userId }).unwrap();
+      console.log("Resend OTP response:", response);
+      
+      if (response?.success) {
+        toast.success("New OTP sent to your email!");
+        localStorage.setItem("otpTimer", "90"); // Reset timer in localStorage
+        setTimeLeft(90); // Reset timer in state
+      } else {
+        toast.error("Failed to send OTP. Please try again.");
+      }
+    } catch (error: any) {
+      console.error("Resend OTP error:", error);
+      console.error("Error status:", error?.status);
+      console.error("Error data:", error?.data);
+      
+      if (error?.status === 404) {
+        toast.error("API endpoint not found. Please contact support.");
+      } else if (error?.status === 500) {
+        toast.error("Server error. Please try again later.");
+      } else {
+        toast.error(error?.data?.message || "Failed to send OTP. Please try again.");
+      }
+    }
   };
 
   // Focus the first input on mount
@@ -136,9 +159,10 @@ export default function OtpVerification() {
         }
       }
     } catch (error: any) {
-      console.log("Error object:", error);
-      console.log("Error data:", error?.data);
-      console.log("Error message:", error?.data?.message);
+      console.error("OTP verification error:", error);
+      console.error("Error status:", error?.status);
+      console.error("Error data:", error?.data);
+      console.error("Error message:", error?.data?.message);
       
       // Check if it's actually a success response with 308 status
       if (error?.status === 308 && error?.data?.success === true) {
@@ -165,9 +189,18 @@ export default function OtpVerification() {
           router.push("/signIn");
         }
       } else {
-        toast.error(
-          error?.data?.message || "Verification failed. Please try again."
-        );
+        // Handle specific error cases
+        if (error?.status === 404) {
+          toast.error("API endpoint not found. Please contact support.");
+        } else if (error?.status === 500) {
+          toast.error("Server error. Please try again later.");
+        } else if (error?.status === 400) {
+          toast.error("Invalid OTP code. Please check and try again.");
+        } else {
+          toast.error(
+            error?.data?.message || "Verification failed. Please try again."
+          );
+        }
       }
     }
   };
@@ -284,26 +317,26 @@ export default function OtpVerification() {
 
           <PrimaryButton type="submit" loading={isLoading} text="Verify OTP" />
           
-          {/* Fetch OTP from email - remove in production */}
-          <button
+          {/* Send New OTP to Email Button */}
+          {/* <button
             type="button"
-            onClick={async () => {
-              const userId = localStorage.getItem("userId");
-              if (userId) {
-                try {
-                  const response = await resendCode({ userId }).unwrap();
-                  if (response?.success) {
-                    toast.success("New OTP sent to email!");
-                  }
-                } catch (error: any) {
-                  toast.error(error?.data?.message || "Failed to send OTP");
-                }
-              }
-            }}
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded text-xs"
+            onClick={handleResendOTP}
+            disabled={isResending || timeLeft > 0}
+            className={`w-full py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
+              isResending || timeLeft > 0
+                ? "bg-gray-300  cursor-not-allowed text-sm text-primary hover:underline"
+                : "bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg"
+            }`}
           >
-            Send New OTP to Email
-          </button>
+            {isResending ? (
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                Sending...
+              </div>
+            ) : (
+              "Send New OTP to Email"
+            )}
+          </button> */}
         </form>
 
 

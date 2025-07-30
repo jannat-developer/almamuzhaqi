@@ -209,7 +209,7 @@ export default function MyProfile() {
 
       <section>
         {/* Upload Photo Section */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-8 border-b border-b-[#99a6b888]">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 py-8 border-b border-b-[#99a6b888] overflow-x-hidden">
           <div>
             <h2 className="font-normal mb-2 text-[20px]">Your Photo</h2>
             <p className="text-[1rem] font-regular text-info">This photo will be displayed on your profile</p>
@@ -222,7 +222,7 @@ export default function MyProfile() {
                 className="flex items-center gap-2 px-4 py-2 bg-[#CCF5FF] text-accent rounded-[10px] shadow cursor-pointer disabled:opacity-50"
               >
                 <FiUpload size={18} className="text-accent" />
-                {isUploading ? "Uploading..." : "Upload Photo"}
+                {"Upload Photo"}
               </button>
               {selectedImage && (
                 <button
@@ -336,12 +336,12 @@ export default function MyProfile() {
                 {profileData?.data?.isEmailVerified ? '✓ Verified' : '✗ Not Verified'}
               </span>
             </div>
-            <div className="flex justify-between items-center">
+            {/* <div className="flex justify-between items-center">
               <span className="text-sm text-gray-600">Account Verified:</span>
               <span className={`text-sm font-medium ${profileData?.data?.isVerified ? 'text-green-600' : 'text-red-600'}`}>
                 {profileData?.data?.isVerified ? '✓ Verified' : '✗ Not Verified'}
               </span>
-            </div>
+            </div> */}
             <div className="flex justify-between items-center">
               <span className="text-sm text-gray-600">Pro Member:</span>
               <span className={`text-sm font-medium ${profileData?.data?.isProMember ? 'text-green-600' : 'text-gray-600'}`}>

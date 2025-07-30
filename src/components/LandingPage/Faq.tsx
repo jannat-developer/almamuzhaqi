@@ -54,7 +54,7 @@ const Faq = () => {
 
                             <button
                                 onClick={() => toggle(index)}
-                                className="w-full flex items-center justify-between text-left text-gray-800 text-sm md:text-xl font-semibold focus:outline-none"
+                                className="w-full flex items-center justify-between text-left text-gray-800 text-sm md:text-xl font-semibold focus:outline-none cursor-pointer"
                             >
                                 <div className="flex items-center gap-2">
                                     <ChevronDown

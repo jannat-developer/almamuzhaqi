@@ -8,17 +8,17 @@ import { useRouter } from "next/navigation";
 import {
   useResendCodeMutation,
   useVerifyEmailMutation,
+  useVerifyResetPasswordOtpMutation,
 } from "@/redux/api/auth/authApi";
 import { toast } from "sonner";
-import { LuCheck } from "react-icons/lu";
 import PrimaryButton from "@/components/shared/primaryButton/PrimaryButton";
 
 interface OtpFormValues {
-  otp: string[];
+  otp: string[]; // 6-digit OTP
 }
 
 export default function OtpVerification() {
-  const { register, handleSubmit, setValue, formState } =
+  const { register, handleSubmit, setValue } =
     useForm<OtpFormValues>({
       defaultValues: {
         otp: ["", "", "", "", "", ""],
@@ -29,6 +29,7 @@ export default function OtpVerification() {
   const [activeInput, setActiveInput] = useState(0);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
+  const [verifyResetPasswordOtp] = useVerifyResetPasswordOtpMutation();
   const [resendCode] = useResendCodeMutation();
 
   // Resend OTP Timer - Initialize from localStorage or default to 300 seconds
@@ -62,11 +63,15 @@ export default function OtpVerification() {
 
   // Resend OTP handler
   const handleResendOTP = () => {
-    const email = localStorage.getItem("email");
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      toast.error("User ID not found. Please try registration again.");
+      return;
+    }
     localStorage.setItem("otpTimer", "300"); // Reset timer in localStorage
     setTimeLeft(300); // Reset timer in state
     console.log("Resending OTP...");
-    resendCode({ email });
+    resendCode({ userId });
   };
 
   // Focus the first input on mount
@@ -77,20 +82,93 @@ export default function OtpVerification() {
   }, []);
 
   const onSubmit = async (data: OtpFormValues) => {
-    const email = localStorage.getItem("email");
+    const userId = localStorage.getItem("userId");
+    const isForgotPassword = localStorage.getItem("forgotPassword") === "true";
+    
+    if (!userId) {
+      toast.error("User ID not found. Please try again.");
+      return;
+    }
+    
     const otpValue = data.otp.join("");
     console.log("OTP submitted:", otpValue);
+    console.log("Is forgot password flow:", isForgotPassword);
+    
     try {
-      const response = await verifyEmail({ email, otp: otpValue }).unwrap();
+      let response;
+      
+      if (isForgotPassword) {
+        // Forgot password OTP verification
+        response = await verifyResetPasswordOtp({ 
+          userId, 
+          otpCode: otpValue
+        }).unwrap();
+        console.log("Forgot password OTP response:", response);
+      } else {
+        // Registration OTP verification
+        response = await verifyEmail({ 
+          userId, 
+          otpCode: otpValue
+        }).unwrap();
+        console.log("Registration OTP response:", response);
+      }
+      
       if (response?.success) {
+        // Store the access token if provided
+        if (response.data.accessToken) {
+          localStorage.setItem("token", response.data.accessToken);
+        }
+        
         toast.success("Verification successful!");
         localStorage.removeItem("otpTimer"); // Clear timer on success
-        router.push("/signIn");
+        
+        // Clear localStorage
+        localStorage.removeItem("userId");
+        localStorage.removeItem("email");
+        localStorage.removeItem("forgotPassword");
+        
+        if (isForgotPassword) {
+          // Redirect to reset password page
+          router.push("/reset-password");
+        } else {
+          // Redirect to login page after registration verification
+          router.push("/signIn");
+        }
       }
     } catch (error: any) {
-      toast.error(
-        error?.data?.message || "Verification failed. Please try again."
-      );
+      console.log("Error object:", error);
+      console.log("Error data:", error?.data);
+      console.log("Error message:", error?.data?.message);
+      
+      // Check if it's actually a success response with 308 status
+      if (error?.status === 308 && error?.data?.success === true) {
+        console.log("308 Success detected, handling as success");
+        
+        // Store the access token if provided
+        if (error.data.data?.accessToken) {
+          localStorage.setItem("token", error.data.data.accessToken);
+        }
+        
+        toast.success("Verification successful!");
+        localStorage.removeItem("otpTimer"); // Clear timer on success
+        
+        // Clear localStorage
+        localStorage.removeItem("userId");
+        localStorage.removeItem("email");
+        localStorage.removeItem("forgotPassword");
+        
+        if (isForgotPassword) {
+          // Redirect to reset password page
+          router.push("/reset-password");
+        } else {
+          // Redirect to login page after registration verification
+          router.push("/signIn");
+        }
+      } else {
+        toast.error(
+          error?.data?.message || "Verification failed. Please try again."
+        );
+      }
     }
   };
 
@@ -102,7 +180,7 @@ export default function OtpVerification() {
     if (value.length > 1) return;
     setValue(`otp.${index}`, value);
 
-    if (value !== "" && index < 1.30) {
+    if (value !== "" && index < 5) {
       setActiveInput(index + 1);
       inputRefs.current[index + 1]?.focus();
     }
@@ -124,7 +202,7 @@ export default function OtpVerification() {
       setActiveInput(index - 1);
       inputRefs.current[index - 1]?.focus();
     }
-    if (e.key === "ArrowRight" && index < 1.30) {
+    if (e.key === "ArrowRight" && index < 5) {
       setActiveInput(index + 1);
       inputRefs.current[index + 1]?.focus();
     }
@@ -134,12 +212,12 @@ export default function OtpVerification() {
     e.preventDefault();
     const pastedData = e.clipboardData.getData("text/plain").trim();
 
-    if (/^\d{4}$/.test(pastedData)) {
+    if (/^\d{6}$/.test(pastedData)) {
       pastedData.split("").forEach((digit, index) => {
         setValue(`otp.${index}`, digit);
       });
-      setActiveInput(3);
-      inputRefs.current[3]?.focus();
+      setActiveInput(5);
+      inputRefs.current[5]?.focus();
     }
   };
 
@@ -150,10 +228,9 @@ export default function OtpVerification() {
           {/* <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-blue-500">
             <LuCheck className="h-20 w-20 text-white" />
           </div> */}
-          <h1 className="text-2xl font-semibold text-accent">Enter 4-Digit code sent <br />
-            to your gmail</h1>
+          <h1 className="text-2xl font-semibold text-accent">Enter 6-Digit verification code</h1>
           <p className="text-sm text-gray-600">
-            Enter the 4-digit verification code sent to you email. <br />
+            Enter the 6-digit verification code sent to your email. <br />
             This code will expired in
           </p>
 
@@ -179,7 +256,7 @@ export default function OtpVerification() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex justify-center gap-2">
-            {[0, 1, 2, 3].map((index) => (
+            {[0, 1, 2, 3, 4, 5].map((index) => (
               <input
                 key={index}
                 type="text"
@@ -205,7 +282,28 @@ export default function OtpVerification() {
           </div>
 
 
-          <PrimaryButton type="submit" loading={isLoading} text="Reset Password" />
+          <PrimaryButton type="submit" loading={isLoading} text="Verify OTP" />
+          
+          {/* Fetch OTP from email - remove in production */}
+          <button
+            type="button"
+            onClick={async () => {
+              const userId = localStorage.getItem("userId");
+              if (userId) {
+                try {
+                  const response = await resendCode({ userId }).unwrap();
+                  if (response?.success) {
+                    toast.success("New OTP sent to email!");
+                  }
+                } catch (error: any) {
+                  toast.error(error?.data?.message || "Failed to send OTP");
+                }
+              }
+            }}
+            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded text-xs"
+          >
+            Send New OTP to Email
+          </button>
         </form>
 
 

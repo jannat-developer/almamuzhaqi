@@ -41,11 +41,16 @@ export default function ForgetPassPage() {
     try {
       const response = await forgetPassword(data).unwrap();
       if (response?.success) {
-        console.log("OTP sent successfully");
+        console.log("Forgot password response:", response);
+        
+        // Store userId for OTP verification
+        localStorage.setItem("userId", response.data.id);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("forgotPassword", "true"); // Flag to identify this is forgot password flow
+        
         toast.success("OTP sent successfully to your email");
-        router.push("/signIn");
+        router.push("/otp");
       }
-      // router.push("/otp")
     } catch (error) {
       console.error("Error:", error);
       toast.error("Error sending OTP. Please try again.");

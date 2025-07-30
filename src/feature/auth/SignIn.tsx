@@ -51,25 +51,37 @@ export default function SignInPage() {
   const dispatch = useDispatch();
 
   const onSubmit = async (data: FormValues) => {
+    console.log("Login attempt with:", data);
     try {
       const response = await signIn(data).unwrap();
+      console.log("Login response:", response);
+      
       if (response?.success) {
-        if (response.data.verify) {
+        // Store access token
+        localStorage.setItem("token", response.data.accessToken);
+        
+        // Store user data
+        localStorage.setItem("user", JSON.stringify(response.data));
+        
+        // Set cookie if remember me is checked
+        if (data.rememberMe) {
           Cookies.set("token", response.data.accessToken);
-          dispatch(
-            setUser({
-              token: response.data.accessToken,
-            })
-          );
-          toast.success("Login successful");
-          router.push("/");
-        } else {
-          router.push("/otp");
         }
+        
+        // Update Redux state
+        dispatch(
+          setUser({
+            token: response.data.accessToken,
+            user: response.data,
+          })
+        );
+        
+        toast.success("Login successful!");
+        router.push("/login-successful");
       }
     } catch (error: any) {
       console.log("Error during sign-in:", error);
-      return toast.error(error?.data?.message || "Login failed");
+      toast.error(error?.data?.message || "Login failed");
     }
   };
 

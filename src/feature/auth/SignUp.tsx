@@ -64,16 +64,24 @@ export default function SignUpPage() {
     // Add role to the payload
     const payload = {
       ...rest,
-      role: "INDIVIDUAL",
+      role: "USER",
     };
 
     try {
       const response = await signUp(payload).unwrap();
+      console.log("Registration response:", response);
       if (response?.success) {
+        // Store userId for OTP verification
+        console.log("Storing userId:", response.data.id);
+        localStorage.setItem("userId", response.data.id);
+        console.log("userId stored in localStorage:", localStorage.getItem("userId"));
         router.push("/otp");
       }
     } catch (error: any) {
       console.error("Error during sign up:", error);
+      console.error("Error details:", error?.data);
+      console.error("Error messages:", error?.data?.errorMessages);
+      console.error("Payload sent:", payload);
       toast(error?.data?.message || "Sign up failed");
     }
   };

@@ -1,8 +1,45 @@
 import baseApi from "../baseApi";
+import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "js-cookie";
+import { 
+  RegistrationRequest, 
+  RegistrationResponse, 
+  EmailVerificationRequest, 
+  EmailVerificationResponse, 
+  ResendOtpRequest, 
+  ResendOtpResponse, 
+  LoginRequest, 
+  LoginResponse, 
+  ForgotPasswordRequest, 
+  ForgotPasswordResponse, 
+  VerifyResetPasswordOtpRequest, 
+  VerifyResetPasswordOtpResponse, 
+  ResetPasswordRequest, 
+  ResetPasswordResponse,
+  GetUserProfileResponse,
+  UpdateProfileRequest,
+  UpdateProfileResponse,
+  UploadProfileImageRequest,
+  UploadProfileImageResponse
+} from "@/interfaces/global";
+
+// Custom base query for image upload that doesn't set Content-Type
+const imageUploadBaseQuery = fetchBaseQuery({
+  baseUrl: "http://172.252.13.69:8601/api/v1",
+  credentials: "omit",
+  prepareHeaders: (headers) => {
+    const token = localStorage.getItem("token") || Cookies?.get("token");
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    // Don't set Content-Type for FormData - let browser set it automatically
+    return headers;
+  },
+});
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    signIn: builder.mutation({
+    signIn: builder.mutation<LoginResponse, LoginRequest>({
       query: (body) => ({
         url: "/auth/login",
         method: "POST",
@@ -10,32 +47,40 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    signUp: builder.mutation({
+    signUp: builder.mutation<RegistrationResponse, RegistrationRequest>({
       query: (body) => ({
-        url: "/auth/register",
+        url: "/auth/create-account",
         method: "POST",
         body,
       }),
       invalidatesTags: ["User"],
     }),
 
-    verifyEmail: builder.mutation({
+    verifyEmail: builder.mutation<EmailVerificationResponse, EmailVerificationRequest>({
       query: (body) => ({
-        url: "/auth/verify-otp",
+        url: "/auth/email-verify",
         method: "POST",
         body,
       }),
     }),
-    resendCode: builder.mutation({
+    resendCode: builder.mutation<ResendOtpResponse, ResendOtpRequest>({
       query: (body) => ({
         url: "/auth/send-otp",
         method: "POST",
         body,
       }),
     }),
-    forgetPassword: builder.mutation({
+    forgetPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordRequest>({
       query: (body) => ({
         url: "/auth/forgot-password",
+        method: "POST",
+        body,
+      }),
+    }),
+    
+    verifyResetPasswordOtp: builder.mutation<VerifyResetPasswordOtpResponse, VerifyResetPasswordOtpRequest>({
+      query: (body) => ({
+        url: "/auth/verify-reset-password-otp",
         method: "POST",
         body,
       }),
@@ -47,12 +92,60 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    resetPassword: builder.mutation({
-      query: ({ userId, password }) => ({
-        url: `/auth/reset-password`,
+    resetPassword: builder.mutation<ResetPasswordResponse, ResetPasswordRequest>({
+      query: (body) => ({
+        url: "/auth/reset-password",
         method: "POST",
-        body: { userId, password },
+        body,
       }),
+    }),
+
+    // User Profile Endpoints
+    getUserProfile: builder.query<GetUserProfileResponse, void>({
+      query: () => ({
+        url: "/users/me",
+        method: "GET",
+      }),
+      providesTags: ["User"],
+    }),
+
+    updateProfile: builder.mutation<UpdateProfileResponse, UpdateProfileRequest>({
+      query: (body) => ({
+        url: "/users/update-profile",
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    uploadProfileImage: builder.mutation<UploadProfileImageResponse, FormData>({
+      queryFn: async (body) => {
+        try {
+          const token = localStorage.getItem("token") || Cookies?.get("token");
+          const headers: Record<string, string> = {};
+          
+          if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+          }
+
+          const response = await fetch("http://172.252.13.69:8601/api/v1/users/me/uploads-profile-photo", {
+            method: "POST",
+            headers,
+            body,
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            return { error: { status: response.status, data } };
+          }
+
+          return { data };
+        } catch (error) {
+          return { error: { status: 500, data: { message: "Network error" } } };
+        }
+      },
+      invalidatesTags: ["User"],
     }),
   }),
 });
@@ -64,5 +157,9 @@ export const {
   useVerifyEmailMutation,
   useResendCodeMutation,
   useForgetPasswordMutation,
+  useVerifyResetPasswordOtpMutation,
   useResetPasswordMutation,
+  useGetUserProfileQuery,
+  useUpdateProfileMutation,
+  useUploadProfileImageMutation,
 } = authApi;

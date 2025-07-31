@@ -29,7 +29,7 @@ const StepOne = () => {
     <div className="min-h-screen bg-[#F9FAFB] ">
       <AiNavbar />
 
-      <main className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-center px-6 pt-20 gap-24">
+      <main className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-center px-6 py-8 md:py-32 gap-8 md:gap-24 ">
         <div className="">
           <p className="text-[1rem] font-medium text-[#475466] mb-4 text-center">Step 1 out of 09</p>
           <h1 className="text-2xl md:text-[2rem] font-medium text-accent text-center">

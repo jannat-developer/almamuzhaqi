@@ -29,7 +29,7 @@ const StepTen = () => {
             <AiNavbar />
 
             {/* Main Content */}
-            <main className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-center px-6 pt-40 gap-24">
+            <main className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-center px-6 py-8 md:py-32 gap-8 md:gap-24 ">
 
 
                 {/* Right side */}

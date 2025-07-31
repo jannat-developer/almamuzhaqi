@@ -15,7 +15,7 @@ const benefits = [
 export default function SolutionSection() {
   return (
     <section className="bg-white px-4 md:px-8 pb-10">
-      <div className="max-w-[1440px] mx-auto bg-white rounded-2xl p-6 md:p-10 grid md:grid-cols-2 gap-6"  style={{ boxShadow: '0 4px 6px 1px #00CCFF26' }}>
+      <div className="max-w-[1440px] mx-auto bg-white rounded-2xl p-6 md:p-12 grid md:grid-cols-2 gap-6"  style={{ boxShadow: '0 4px 6px 1px #00CCFF26' }}>
         <ul className="bg-card p-6 md:p-12 rounded-[20px] text-sm space-y-2 text-indigo-900 font-medium">
           {benefits.map((benefit, index) => (
 

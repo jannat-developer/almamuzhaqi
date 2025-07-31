@@ -1,8 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { MdOutlineErrorOutline } from "react-icons/md";
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
+import { logout } from '@/redux/features/user/userSlice';
+import { useRouter } from 'next/navigation';
 
 type LogoutModalProps = {
   isOpen: boolean;
@@ -10,7 +14,43 @@ type LogoutModalProps = {
   onConfirm: () => void;
 };
 
+
 export const LogoutPopup = ({ isOpen, onClose, onConfirm }: LogoutModalProps) => {
+  const dispatch = useDispatch();
+    const router = useRouter();
+    const { user, token } = useSelector((state: any) => state.user);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    // Check for user data in localStorage on mount
+    useEffect(() => {
+      const userData = localStorage.getItem('user');
+      const tokenData = localStorage.getItem('token');
+      if (userData && tokenData && !user) {
+        // If user data exists in localStorage but not in Redux, restore it
+        const parsedUser = JSON.parse(userData);
+        dispatch({
+          type: 'user/setUser',
+          payload: { user: parsedUser, token: tokenData }
+        });
+      }
+    }, [dispatch, user]);
+    const handleLogout = () => {
+    // Clear localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    // Clear Redux state
+    dispatch(logout());
+
+    // Show success message
+    toast.success('Logged out successfully');
+
+    // Redirect to home page
+    router.push('/');
+
+    // Close dropdown
+    setIsDropdownOpen(false);
+  };
   return (
     <Dialog open={isOpen} onClose={onClose} className="fixed z-50 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4">
@@ -33,7 +73,7 @@ export const LogoutPopup = ({ isOpen, onClose, onConfirm }: LogoutModalProps) =>
           <div className="mt-3 flex justify-end gap-6 ">
 
             <button
-              onClick={onConfirm}
+              onClick={handleLogout}
               className="px-10 py-2 rounded-md bg-white text-accent border border-accent w-full"
             >
               Logout

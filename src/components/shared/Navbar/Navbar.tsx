@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useGetUserProfileQuery } from '@/redux/api/auth/authApi';
 import { CgProfile } from 'react-icons/cg';
 import { MdLogout } from 'react-icons/md';
+import { RxDashboard } from 'react-icons/rx';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -181,7 +182,7 @@ const Navbar = () => {
                   </div>
                   <Link href="/my-plan">
                     <div className="w-full flex items-center justify-start gap-2 px-4 py-2 text-sm text-accent hover:bg-card transition-colors border-b border-gray-100 cursor-pointer">
-                      <CgProfile className='text-xl text-[#99A6B8]' />
+                      <RxDashboard className='text-xl text-[#99A6B8]' />
                       <p className='text-[1rem] '>Dashboard</p>
                     </div>
                   </Link>

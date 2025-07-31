@@ -14,12 +14,12 @@ const problems = [
 
 export default function ProblemSection() {
   return (
-    <section className="max-w-[1440px] mx-auto bg-white py-10 px-4  ">
-      <h2 className=" text-[2rem] md:text-[2.3rem] font-semibold text-accent mb-12">
+    <section className="max-w-[1440px] mx-auto bg-white py-10 px-4">
+      <h2 className=" text-[2rem] md:text-[2.3rem] font-semibold text-accent mb-2 md:mb-12 ms-2 md:ms-0">
         The Problem Most Founders Ignore<br />and the Smart Fix
       </h2>
 
-      <div className=" bg-white rounded-2xl  p-6 md:p-10 grid md:grid-cols-2 gap-6" style={{ boxShadow: '0 4px 6px 1px #00CCFF26' }}>
+      <div className=" bg-white rounded-2xl  p-6 md:p-12 grid md:grid-cols-2 gap-6" style={{ boxShadow: '0 4px 6px 1px #00CCFF26' }}>
         <div className='p-6 md:p-12'>
           <h3 className="text-[1.7rem] md:text-[2rem] font-medium text-accent mb-4">
             Problems Every Founder Faces Without a Proper Plan
